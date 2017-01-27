@@ -1,18 +1,12 @@
 defmodule Store do
-  @moduledoc """
-  Documentation for Store.
-  """
+  def start(_type, _args) do
+    import Supervisor.Spec
 
-  @doc """
-  Hello world.
+    children = [
+      supervisor(Store.Repo, [])
+    ]
 
-  ## Examples
-
-      iex> Store.hello
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: Store.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
