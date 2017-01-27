@@ -1,18 +1,14 @@
 defmodule Security do
-  @moduledoc """
-  Documentation for Security.
-  """
+  use Application
 
-  @doc """
-  Hello world.
+  def start(_type, _args) do
+    import Supervisor.Spec
 
-  ## Examples
+    children = [
+      supervisor(Security.Repo, [])
+    ]
 
-      iex> Security.hello
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: Security.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
