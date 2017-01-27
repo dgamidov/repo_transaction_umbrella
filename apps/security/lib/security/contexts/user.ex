@@ -5,4 +5,9 @@ defmodule Security.User do
     changeset = UserSchema.build_changeset(%UserSchema{}, params)
     Repo.insert(changeset)
   end
+
+  def add(params, repo) do
+    changeset = UserSchema.build_changeset(%UserSchema{}, params)
+    repo.insert(changeset)
+  end
 end

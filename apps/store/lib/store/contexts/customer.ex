@@ -6,11 +6,11 @@ defmodule Store.Customer do
   def add(params) when is_map(params) do
     multi =
       Multi.new
-      |> Multi.run(:user, fn _ -> User.add(params) end)
+      |> Multi.run(:user, fn _ -> User.add(params, Repo) end)
       |> Multi.run(:profile, fn %{user: user} ->
         params
         |> Map.put_new("user_id", user.id)
-        |> Profile.add()
+        |> Profile.add(Repo)
       end)
 
     case Repo.transaction(multi) do

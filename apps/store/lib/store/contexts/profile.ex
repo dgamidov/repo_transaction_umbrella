@@ -5,4 +5,9 @@ defmodule Store.Profile do
     changeset = ProfileSchema.build_changeset(%ProfileSchema{}, params)
     Repo.insert(changeset)
   end
+
+  def add(params, repo) do
+    changeset = ProfileSchema.build_changeset(%ProfileSchema{}, params)
+    repo.insert(changeset)
+  end
 end
