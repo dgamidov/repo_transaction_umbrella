@@ -4,13 +4,16 @@ defmodule Store.Customer do
   alias Security.User
 
   def add(params) when is_map(params) do
+    user_changeset = User.build_changeset(params)
+
     multi =
       Multi.new
-      |> Multi.run(:user, fn _ -> User.add(params) end)
+      |> Multi.insert(:user, user_changeset)
       |> Multi.run(:profile, fn %{user: user} ->
         params
         |> Map.put_new("user_id", user.id)
-        |> Profile.add()
+        |> Profile.build_changeset()
+        |> Repo.insert()
       end)
 
     case Repo.transaction(multi) do
