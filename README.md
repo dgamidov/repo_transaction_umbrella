@@ -14,3 +14,4 @@ Customer.add(params)
 ```
 
 Solution is in brunch "solution".
+Better solution is in brunch "better_solution".
